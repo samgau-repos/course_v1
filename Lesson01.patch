@@ -1,0 +1,174 @@
+Index: model/src/main/resources/META-INF/persistence.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- model/src/main/resources/META-INF/persistence.xml	(revision )
++++ model/src/main/resources/META-INF/persistence.xml	(revision )
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
++<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
++             version="2.1"
++             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
++             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
++    <persistence-unit name="model-persistence-unit" transaction-type="JTA">
++        <description>Course Database</description>
++        <provider>org.hibernate.ejb.HibernatePersistence</provider>
++        <jta-data-source>java:/H2DS</jta-data-source>
++        <properties>
++            <property name="hibernate.show_sql" value="true"/>
++            <property name="hibernate.format_sql" value="true"/>
++            <property name="hibernate.query.startup_check" value="true"/>
++            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
++            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
++        </properties>
++    </persistence-unit>
++</persistence>
+Index: doc/lesson01.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- doc/lesson01.md	(revision )
++++ doc/lesson01.md	(revision )
+@@ -0,0 +1,30 @@
++# Урок 2. Материалы
++
++*Инструкция к WildFly*
++
++1. `${JBOSS_HOME}/bin/add_user.bat` - добавить management пользователя для
++    управления сервером приложений.
++2. `${JBOSS_HOME}/bin/standalone.bat` - запустить сервер приложений.
++3. `localhost:8080` - для доступа к серверу приложений. Перейдите по ссылке
++    в `administrationConsole` (`localhost:9990/console`).
++4. Создать `datasource`. Для этого перейти во вкладку `Configuration -> SubSystems ->
++    datasources -> Non-XA -> Add`.
++    - Выбрать: `H2 Datasource`.
++    - Проставить правильный `JNDI NAME` в значение `java:/H2DS`. Это имя будет
++    использоваться в приложении для доступа к ресурсу.
++    - `Detected Driver` выбрать `h2`.
++    - `ConnectionURL` необходимо проставить значение `file` вместо `mem`: 
++    `jdbc:h2:file:/home/db;DB_CLOSE_DELAY=-1`.
++    - Нажать `Finish` и проверить, что в папке `C:/home` появились `db` файлы.
++    База данных готова.
++5. Теперь можно деплоить приложения в `Deployemnts -> ADD`. Наше приложение 
++    собирается в папке `assembly/target`. Проверьте в консоли, что выводятся
++    скрипты создания базы при деплое приложения.
++
++*Материалы*
++
++1. [JPA Tutorial](https://www.tutorialspoint.com/jpa/). Советую почитать разделы
++`Introduction` и `Entity Relationships`.
++2. Разберитесь с аннотациями `@Entity, @Table, @Basic, @Id, @Column, @OneToMany,
++    @ManyToOne, @Column, @JoinColumn`.
++    
+\ No newline at end of file
+Index: model/src/main/java/com/samgau/start/model/Employee.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- model/src/main/java/com/samgau/start/model/Employee.java	(revision )
++++ model/src/main/java/com/samgau/start/model/Employee.java	(revision )
+@@ -0,0 +1,100 @@
++package com.samgau.start.model;
++
++import javax.persistence.Entity;
++import javax.persistence.GeneratedValue;
++import javax.persistence.GenerationType;
++import javax.persistence.Id;
++import javax.persistence.Table;
++import java.io.Serializable;
++
++/**
++ * Created by Tolegen Izbassar on 15.03.2017.
++ */
++@Entity
++@Table(name = "E_EMPLOYEE")
++public class Employee implements Comparable<Employee>, Serializable {
++
++	private Long id;
++	private String name;
++	private String skype;
++	private String phone;
++	private String mail;
++	private String address;
++
++	private static final long serialVersionUID = -6567636814130505329L;
++
++	@Id
++	@GeneratedValue(strategy = GenerationType.AUTO)
++	public Long getId() {
++		return id;
++	}
++
++	public void setId(Long id) {
++		this.id = id;
++	}
++
++	public String getName() {
++		return name;
++	}
++
++	public void setName(String name) {
++		this.name = name;
++	}
++
++	public String getSkype() {
++		return skype;
++	}
++
++	public void setSkype(String skype) {
++		this.skype = skype;
++	}
++
++	public String getPhone() {
++		return phone;
++	}
++
++	public void setPhone(String phone) {
++		this.phone = phone;
++	}
++
++	public String getMail() {
++		return mail;
++	}
++
++	public void setMail(String mail) {
++		this.mail = mail;
++	}
++
++	public String getAddress() {
++		return address;
++	}
++
++	public void setAddress(String address) {
++		this.address = address;
++	}
++
++	@Override
++	public boolean equals(Object o) {
++		if (this == o) {
++			return true;
++		}
++		if (o == null || getClass() != o.getClass()) {
++			return false;
++		}
++
++		Employee employee = (Employee) o;
++
++		return getId() != null ? getId().equals(employee.getId()) : employee
++				.getId() == null;
++	}
++
++	@Override
++	public int hashCode() {
++		return getId() != null ? getId().hashCode() : 0;
++	}
++
++	@Override
++	public int compareTo(Employee o) {
++		return this.getId().compareTo(o.getId());
++	}
++}
