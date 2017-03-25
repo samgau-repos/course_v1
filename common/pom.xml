@@ -10,8 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.samgau.start</groupId>
+            <artifactId>model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <artifactId>common</artifactId>
     <version>${project.version}</version>
-
-
 </project>
