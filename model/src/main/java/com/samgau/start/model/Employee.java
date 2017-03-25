@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 @NamedQuery(name = "Employee.FindByName", query = "" +
-		"SELECT Employee from Employee emp where emp.name = :p_name")
+		"SELECT emp from Employee emp where emp.name = :p_name")
 @Table(name = "E_EMPLOYEE")
 public class Employee implements Comparable<Employee>, Serializable {
 

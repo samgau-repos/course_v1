@@ -1,16 +1,14 @@
 package com.samgau.start.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by Tolegen Izbassar on 17.03.2017.
  */
 @Entity
+@NamedQuery(name = "Department.FindByName", query = "" +
+		"SELECT dep from Department dep where dep.name = :p_name")
 @Table(name = "D_DEPARTMENT")
 public class Department implements Serializable, Comparable<Department> {
 

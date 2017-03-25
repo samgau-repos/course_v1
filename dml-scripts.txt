@@ -1,0 +1,18 @@
+CREATE TABLE D_DEPARTMENT (
+  id   BIGINT NOT NULL,
+  name VARCHAR(255),
+  PRIMARY KEY (id)
+);
+CREATE TABLE E_EMPLOYEE (
+  id            BIGINT NOT NULL,
+  address       VARCHAR(255),
+  mail          VARCHAR(255),
+  name          VARCHAR(255),
+  phone         VARCHAR(255),
+  skype         VARCHAR(255),
+  department_id BIGINT,
+  PRIMARY KEY (id)
+);
+alter table E_EMPLOYEE add constraint FK_EMPLOYEE_DEP_ID
+foreign key (department_id)
+references D_DEPARTMENT;
