@@ -1,12 +1,13 @@
-package com.samgau.start.model.dao.impl;
+package com.samgau.start.service.dao.impl;
 
 import com.samgau.start.model.Employee;
-import com.samgau.start.model.dao.EmployeeDAO;
+import com.samgau.start.service.dao.EmployeeDAO;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by Tolegen Izbassar on 17.03.2017.
@@ -40,4 +41,12 @@ public class EmployeeDAOBean implements EmployeeDAO {
         query.setParameter("p_name", name);
         return query.getSingleResult();
     }
+
+    @Override
+    public List<Employee> getAll() {
+        return entityManager
+                .createNamedQuery("Employee.FindAll", Employee.class)
+                .getResultList();
+    }
+
 }

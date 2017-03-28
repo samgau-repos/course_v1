@@ -1,16 +1,15 @@
-package com.samgau.start.model.dao;
+package com.samgau.start.service.api;
 
-import com.samgau.start.model.Department;
+import com.samgau.start.model.dto.EmployeeDTO;
 
 import javax.ejb.Local;
+import java.util.List;
 
-/**
- * Created by Chingiskhan on 24.03.2017.
- */
 @Local
-public interface DepartmentDAO {
+public interface EmployeeService {
+
     /**
-     * Finds Department by id
+     * Finds employee by id
      * @param id - id of entity
      * @return the found entity instance or null if the entity does
      *         not exist
@@ -18,29 +17,32 @@ public interface DepartmentDAO {
      *         is not a valid type for that entity's primary key or
      *         is null
      */
-    Department findById(Long id);
+    EmployeeDTO findById(Long id);
 
     /**
      * Updates given entity in database
-     * @param Department entity with new values
+     * @param employee entity with new values
      * @throws IllegalArgumentException if instance is not an
      *         entity or is a removed entity
      */
-    Department update(Department Department);
+    EmployeeDTO update(EmployeeDTO employee);
 
     /**
      * Creates given entity in database
-     * @param Department entity to created in database
+     * @param employee entity to created in database
      * @return generated id of entity
      */
-    Long create(Department Department);
+    Long create(EmployeeDTO employee);
 
     /**
-     * Finds Department by name
-     * @param name name of Department
-     * @return Department
-     * @throws javax.persistence.NoResultException if no Department
+     * Finds employee by name
+     * @param name name of employee
+     * @return employee
+     * @throws javax.persistence.NoResultException if no employee
      *          was found
      */
-    Department findByName(String name);
+    EmployeeDTO findByName(String name);
+
+    List<EmployeeDTO> getAll();
+
 }

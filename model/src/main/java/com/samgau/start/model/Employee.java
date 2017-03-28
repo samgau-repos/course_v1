@@ -1,20 +1,18 @@
 package com.samgau.start.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by Tolegen Izbassar on 15.03.2017.
  */
 @Entity
-@NamedQuery(name = "Employee.FindByName", query = "" +
-		"SELECT emp from Employee emp where emp.name = :p_name")
+@NamedQueries({
+        @NamedQuery(name = "Employee.FindAll", query = "" +
+                "SELECT emp from Employee emp"),
+        @NamedQuery(name = "Employee.FindByName", query = "" +
+                "SELECT emp from Employee emp where emp.name = :p_name")
+})
 @Table(name = "E_EMPLOYEE")
 public class Employee implements Comparable<Employee>, Serializable {
 
@@ -24,7 +22,7 @@ public class Employee implements Comparable<Employee>, Serializable {
 	private String phone;
 	private String mail;
 	private String address;
-	private Department department;
+	//private Department department;
 
 	private static final long serialVersionUID = -6567636814130505329L;
 
@@ -78,6 +76,7 @@ public class Employee implements Comparable<Employee>, Serializable {
 		this.address = address;
 	}
 
+	/*
 	@ManyToOne
 	public Department getDepartment() {
 		return department;
@@ -86,6 +85,7 @@ public class Employee implements Comparable<Employee>, Serializable {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
+	*/
 
 	@Override
 	public boolean equals(Object o) {

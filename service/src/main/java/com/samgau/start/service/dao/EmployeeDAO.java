@@ -1,11 +1,15 @@
-package main.com.samgau.start.service.api;
+package com.samgau.start.service.dao;
 
-import com.samgau.start.model.dto.EmployeeDTO;
+import com.samgau.start.model.Employee;
 
 import javax.ejb.Local;
+import java.util.List;
 
+/**
+ * Created by Tolegen Izbassar on 17.03.2017.
+ */
 @Local
-public interface EmployeeService {
+public interface EmployeeDAO {
 
     /**
      * Finds employee by id
@@ -16,7 +20,7 @@ public interface EmployeeService {
      *         is not a valid type for that entity's primary key or
      *         is null
      */
-    EmployeeDTO findById(Long id);
+    Employee findById(Long id);
 
     /**
      * Updates given entity in database
@@ -24,14 +28,14 @@ public interface EmployeeService {
      * @throws IllegalArgumentException if instance is not an
      *         entity or is a removed entity
      */
-    EmployeeDTO update(EmployeeDTO employee);
+    Employee update(Employee employee);
 
     /**
      * Creates given entity in database
      * @param employee entity to created in database
      * @return generated id of entity
      */
-    Long create(EmployeeDTO employee);
+    Long create(Employee employee);
 
     /**
      * Finds employee by name
@@ -40,6 +44,7 @@ public interface EmployeeService {
      * @throws javax.persistence.NoResultException if no employee
      *          was found
      */
-    EmployeeDTO findByName(String name);
+    Employee findByName(String name);
 
+    List<Employee> getAll();
 }

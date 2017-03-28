@@ -1,20 +1,24 @@
-package main.com.samgau.start.service.api.impl;
+package com.samgau.start.service.api.impl;
 
 import com.samgau.start.common.util.TransferUtil;
 import com.samgau.start.model.Employee;
-import com.samgau.start.model.dao.EmployeeDAO;
+import com.samgau.start.service.dao.EmployeeDAO;
 import com.samgau.start.model.dto.EmployeeDTO;
-import main.com.samgau.start.service.api.EmployeeService;
+import com.samgau.start.service.api.EmployeeService;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Chingiskhan on 24.03.2017.
  */
+@Stateless
 public class EmployeeServiceImpl implements EmployeeService{
 
     @EJB
-    EmployeeDAO employeeDAO;
+    private EmployeeDAO employeeDAO;
 
     @Override
     public EmployeeDTO findById(Long id) {
@@ -46,6 +50,17 @@ public class EmployeeServiceImpl implements EmployeeService{
             return TransferUtil.getAsEmployeeDTO(employee);
         }
         return null;
+    }
+
+    @Override
+    public List<EmployeeDTO> getAll() {
+        List<EmployeeDTO> result = new ArrayList<>();
+        List<Employee> employeeList = employeeDAO.getAll();
+        for (int i=0; i < employeeList.size(); i++) {
+            EmployeeDTO employeeDTO = TransferUtil.getAsEmployeeDTO(employeeList.get(i));
+            result.add(employeeDTO);
+        }
+        return result;
     }
 
 }
