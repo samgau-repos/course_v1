@@ -1,7 +1,7 @@
-package com.samgau.start.model.dao.impl;
+package com.samgau.start.service.dao.impl;
 
 import com.samgau.start.model.Department;
-import com.samgau.start.model.dao.DepartmentDAO;
+import com.samgau.start.service.dao.DepartmentDAO;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

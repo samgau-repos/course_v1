@@ -17,9 +17,9 @@ public final class TransferUtil {
         employeeDTO.setSkype(source.getSkype());
         employeeDTO.setPhone(source.getPhone());
         employeeDTO.setMail(source.getMail());
-        if (source.getDepartment() != null) {
+        /*if (source.getDepartment() != null) {
             employeeDTO.setDepartment(getAsDepartmentDTO(source.getDepartment()));
-        }
+        }*/
         return employeeDTO;
     }
 
@@ -37,9 +37,9 @@ public final class TransferUtil {
         employee.setSkype(source.getSkype());
         employee.setPhone(source.getPhone());
         employee.setMail(source.getMail());
-        if (source.getDepartment() != null) {
+        /*if (source.getDepartment() != null) {
             employee.setDepartment(getAsDepartment(source.getDepartment()));
-        }
+        }*/
         return employee;
     }
 
