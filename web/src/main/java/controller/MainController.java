@@ -53,6 +53,13 @@ public class MainController {
 
     public void saveEmployee() {
         employeeService.create(employeeDTO);
+        // ставим workersDTO = null,
+        workersDTO = null;
+        // После окончания вызова текущего метода saveEmployee() в main.xhtml происходит update="workersList"
+        // перерисовывается часть страницы, но так как workersList берёт значения из value="#{mainController.workersDTO}"
+        // вызывается метод getWorkersDTO, который видит что workersDTO == null и
+        // запрашивает данные с БД выполняя employeeService.getAll(); таким образом на UI мы видим последнего добавленого
+        // сотрудника
     }
 
 }
