@@ -9,11 +9,47 @@
 <h:body>
     <h1>Java EE 7: Welcome to our Cloud Tutorial!</h1>
 
-    <p:dataList value="#{mainController.workersDTO}" var="worker" type="ordered">
+    <p:commandButton value="Добавить сотрудника"
+                     icon="fa fa-plus-circle"
+                     onclick="PF('dlgCreateUser').show();"
+                     actionListener="#{mainController.prepareEmployeeDTO}"
+                     update="formCreateUser:pnlCreateUser"/>
+    <p/>
+
+    <p:dataList id="workersList" value="#{mainController.workersDTO}" var="worker" type="ordered">
         <f:facet name="header">
             Список сотрудников
         </f:facet>
         #{worker.name}
     </p:dataList>
+
+    <p:dialog header="Добавить сотрудника" widgetVar="dlgCreateUser" modal="true">
+        <h:form id="formCreateUser">
+            <p:panelGrid columns="2" id="pnlCreateUser">
+                <p:outputLabel value="Имя сотрудника" for="name"/>
+                <p:inputText id="name" required="true" value="#{mainController.employeeDTO.name}"/>
+
+                <p:outputLabel value="Адрес" for="address" />
+                <p:inputText id="address" value="#{mainController.employeeDTO.address}"/>
+
+                <p:outputLabel value="e-mail" for="e-mail"/>
+                <p:inputText id="e-mail" value="#{mainController.employeeDTO.mail}"/>
+
+                <p:outputLabel value="Телефон" for="phone"/>
+                <p:inputText id="phone" value="#{mainController.employeeDTO.phone}"/>
+
+                <p:outputLabel value="Skype" for="skype"/>
+                <p:inputText id="skype" value="#{mainController.employeeDTO.skype}"/>
+            </p:panelGrid>
+            <p/>
+            <p:outputPanel>
+                <p:commandButton action="#{mainController.saveEmployee}"
+                                 value="Добавить"
+                                 icon="fa fa-check"
+                                 onclick="PF('dlgCreateUser').hide();"
+                                 update="workersList"/>
+            </p:outputPanel>
+        </h:form>
+    </p:dialog>
 </h:body>
 </html>

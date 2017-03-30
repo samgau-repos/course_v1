@@ -14,6 +14,7 @@ public final class TransferUtil {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(source.getId());
         employeeDTO.setName(source.getName());
+        employeeDTO.setAddress(source.getAddress());
         employeeDTO.setSkype(source.getSkype());
         employeeDTO.setPhone(source.getPhone());
         employeeDTO.setMail(source.getMail());
@@ -34,6 +35,7 @@ public final class TransferUtil {
         Employee employee = new Employee();
         employee.setId(source.getId());
         employee.setName(source.getName());
+        employee.setAddress(source.getAddress());
         employee.setSkype(source.getSkype());
         employee.setPhone(source.getPhone());
         employee.setMail(source.getMail());

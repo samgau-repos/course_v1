@@ -1,5 +1,6 @@
 package controller;
 
+import com.samgau.start.model.Employee;
 import com.samgau.start.model.dto.EmployeeDTO;
 import com.samgau.start.service.api.EmployeeService;
 
@@ -18,13 +19,13 @@ public class MainController {
 
     private static final List<String> workers = new ArrayList<>();
     private List<EmployeeDTO> workersDTO = null;
+    private EmployeeDTO employeeDTO = null;
 
     @EJB
     private EmployeeService employeeService;
 
     public MainController() {
-        workers.add("worker1");
-        workers.add("worker2");
+        prepareEmployeeDTO();
     }
 
     public List<String> getWorkers() {
@@ -32,17 +33,26 @@ public class MainController {
     }
 
     public List<EmployeeDTO> getWorkersDTO() {
-        createEmployee();
         if (workersDTO == null) {
             workersDTO = employeeService.getAll();
         }
         return workersDTO;
     }
 
-    private void createEmployee() {
-        EmployeeDTO e = new EmployeeDTO();
-        e.setId(1L);
-        e.setName("Worker 1");
-        employeeService.create(e);
+    public void prepareEmployeeDTO() {
+        employeeDTO = new EmployeeDTO();
     }
+
+    public EmployeeDTO getEmployeeDTO() {
+        return employeeDTO;
+    }
+
+    public void setEmployeeDTO(EmployeeDTO employeeDTO) {
+        this.employeeDTO = employeeDTO;
+    }
+
+    public void saveEmployee() {
+        employeeService.create(employeeDTO);
+    }
+
 }
