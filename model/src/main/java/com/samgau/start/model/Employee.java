@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Employee.FindAll", query = "" +
-                "SELECT emp from Employee emp"),
+                "SELECT emp from Employee emp where emp.isRemoved = 0"),
         @NamedQuery(name = "Employee.FindByName", query = "" +
-                "SELECT emp from Employee emp where emp.name = :p_name")
+                "SELECT emp from Employee emp where emp.name = :p_name and emp.isRemoved = 0")
 })
 @Table(name = "E_EMPLOYEE")
 public class Employee implements Comparable<Employee>, Serializable {
@@ -22,6 +22,7 @@ public class Employee implements Comparable<Employee>, Serializable {
 	private String phone;
 	private String mail;
 	private String address;
+	private Integer isRemoved;
 	//private Department department;
 
 	private static final long serialVersionUID = -6567636814130505329L;
@@ -87,7 +88,15 @@ public class Employee implements Comparable<Employee>, Serializable {
 	}
 	*/
 
-	@Override
+    public Integer getIsRemoved() {
+        return isRemoved;
+    }
+
+    public void setIsRemoved(Integer isRemoved) {
+        this.isRemoved = isRemoved;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;

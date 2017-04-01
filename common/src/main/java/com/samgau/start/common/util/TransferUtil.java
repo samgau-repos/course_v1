@@ -45,7 +45,7 @@ public final class TransferUtil {
         return employee;
     }
 
-    private static Department getAsDepartment(DepartmentDTO source) {
+    public static Department getAsDepartment(DepartmentDTO source) {
         Department department = new Department();
         department.setId(source.getId());
         department.setName(source.getName());

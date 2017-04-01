@@ -20,11 +20,16 @@ public class MainController {
     private static final List<String> workers = new ArrayList<>();
     private List<EmployeeDTO> workersDTO = null;
     private EmployeeDTO employeeDTO = null;
+    private final int MODE_CREATE = 1;
+    private final int MODE_EDIT = 2;
+    private final int MODE_VIEW = 3;
+    private int currentMode;
 
     @EJB
     private EmployeeService employeeService;
 
     public MainController() {
+        currentMode = MODE_VIEW;
         prepareEmployeeDTO();
     }
 
@@ -41,6 +46,7 @@ public class MainController {
 
     public void prepareEmployeeDTO() {
         employeeDTO = new EmployeeDTO();
+        currentMode = MODE_CREATE;
     }
 
     public EmployeeDTO getEmployeeDTO() {
@@ -52,7 +58,11 @@ public class MainController {
     }
 
     public void saveEmployee() {
-        employeeService.create(employeeDTO);
+        if (currentMode == MODE_CREATE) {
+            employeeService.create(employeeDTO);
+        } else if (currentMode == MODE_EDIT) {
+            employeeService.update(employeeDTO);
+        }
         // ставим workersDTO = null,
         workersDTO = null;
         // После окончания вызова текущего метода saveEmployee() в main.xhtml происходит update="workersList"
@@ -60,6 +70,46 @@ public class MainController {
         // вызывается метод getWorkersDTO, который видит что workersDTO == null и
         // запрашивает данные с БД выполняя employeeService.getAll(); таким образом на UI мы видим последнего добавленого
         // сотрудника
+        currentMode = MODE_VIEW;
+    }
+
+    public int getCurrentMode() {
+        return this.currentMode;
+    }
+
+    public boolean getIsReadonly() {
+        return this.currentMode == 3;
+    }
+
+    public String getTitle() {
+        String result;
+        switch (this.currentMode) {
+            case 1:
+                result = "Добавить сотрудника";
+                break;
+            case 2:
+                result = "Редактировать сотрудника";
+                break;
+            case 3:
+                result = "Просмотр сотрудника";
+                break;
+            default:
+                result = "Неизвестный режим";
+        }
+        return result;
+    }
+
+    public void modeEdit() {
+        currentMode = MODE_EDIT;
+    }
+
+    public void modeView() {
+        currentMode = MODE_VIEW;
+    }
+
+    public void removeEmployee(EmployeeDTO employee) {
+        employeeService.removeEmployee(employee);
+        workersDTO = null;
     }
 
 }

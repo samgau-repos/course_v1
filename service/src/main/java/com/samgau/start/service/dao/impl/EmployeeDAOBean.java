@@ -16,7 +16,7 @@ import java.util.List;
 public class EmployeeDAOBean implements EmployeeDAO {
 
     @PersistenceContext(unitName = "model-persistence-unit")
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public Employee findById(Long id) {
@@ -47,6 +47,12 @@ public class EmployeeDAOBean implements EmployeeDAO {
         return entityManager
                 .createNamedQuery("Employee.FindAll", Employee.class)
                 .getResultList();
+    }
+
+    @Override
+    public void removeEmployee(Employee employee) {
+        employee.setIsRemoved(1);
+        this.update(employee);
     }
 
 }
