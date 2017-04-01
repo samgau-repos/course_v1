@@ -3,6 +3,7 @@ package com.samgau.start.service.dao;
 import com.samgau.start.model.Department;
 
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * Created by Chingiskhan on 24.03.2017.
@@ -43,4 +44,6 @@ public interface DepartmentDAO {
      *          was found
      */
     Department findByName(String name);
+
+    public List<Department> getAll();
 }

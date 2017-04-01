@@ -45,4 +45,5 @@ public interface EmployeeService {
 
     List<EmployeeDTO> getAll();
 
+    void removeEmployee(EmployeeDTO employee);
 }
