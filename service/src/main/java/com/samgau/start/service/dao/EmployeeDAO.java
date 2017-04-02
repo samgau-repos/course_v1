@@ -47,4 +47,6 @@ public interface EmployeeDAO {
     Employee findByName(String name);
 
     List<Employee> getAll();
+
+    void removeEmployee(Employee employee);
 }

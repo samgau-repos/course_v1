@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <title>Tutorial Java EE 7</title>
 </h:head>
@@ -13,43 +14,67 @@
                      icon="fa fa-plus-circle"
                      onclick="PF('dlgCreateUser').show();"
                      actionListener="#{mainController.prepareEmployeeDTO}"
-                     update="formCreateUser:pnlCreateUser"/>
+                     update="formCreateUser:pnlCreateUser, formCreateUser:buttonsPanel"/>
     <p/>
+    <h:form id="workersForm">
+        <p:dataList id="workersList" value="#{mainController.workersDTO}" var="worker" type="ordered">
+            <f:facet name="header">
+                Список сотрудников
+            </f:facet>
+            <p:commandLink actionListener="#{mainController.modeView}"
+                           update="formCreateUser:pnlCreateUser, formCreateUser:buttonsPanel, idDlgCreateUser"
+                           oncomplete="PF('dlgCreateUser').show()"
+                           styleClass="ui-icon ui-icon-search"
+                           style="float:left;margin-right:10px">
+                <f:setPropertyActionListener value="#{worker}" target="#{mainController.employeeDTO}" />
+            </p:commandLink>
+            <p:commandLink actionListener="#{mainController.modeEdit}"
+                           update="formCreateUser:pnlCreateUser, formCreateUser:buttonsPanel, idDlgCreateUser"
+                           oncomplete="PF('dlgCreateUser').show()"
+                           styleClass="ui-icon ui-icon-pencil"
+                           style="float:left;margin-right:10px">
+                <f:setPropertyActionListener value="#{worker}" target="#{mainController.employeeDTO}" />
+            </p:commandLink>
+            <p:commandLink actionListener="#{mainController.removeEmployee(worker)}"
+                           update="workersList"
+                           styleClass="ui-icon ui-icon-trash"
+                           style="float:left;margin-right:10px">
+            </p:commandLink>
+            <h:outputText value="#{worker.name}" style="display:inline-block"/>
+        </p:dataList>
+    </h:form>
 
-    <p:dataList id="workersList" value="#{mainController.workersDTO}" var="worker" type="ordered">
-        <f:facet name="header">
-            Список сотрудников
-        </f:facet>
-        #{worker.name}
-    </p:dataList>
-
-    <p:dialog header="Добавить сотрудника" widgetVar="dlgCreateUser" modal="true">
+    <p:dialog id="idDlgCreateUser" header="${mainController.title}" widgetVar="dlgCreateUser" modal="true">
         <h:form id="formCreateUser">
             <p:panelGrid columns="2" id="pnlCreateUser">
                 <p:outputLabel value="Имя сотрудника" for="name"/>
-                <p:inputText id="name" required="true" value="#{mainController.employeeDTO.name}"/>
+                <p:inputText id="name" required="true" value="#{mainController.employeeDTO.name}" readonly="#{mainController.isReadonly}"/>
 
                 <p:outputLabel value="Адрес" for="address" />
-                <p:inputText id="address" value="#{mainController.employeeDTO.address}"/>
+                <p:inputText id="address" value="#{mainController.employeeDTO.address}" readonly="#{mainController.isReadonly}"/>
 
                 <p:outputLabel value="e-mail" for="e-mail"/>
-                <p:inputText id="e-mail" value="#{mainController.employeeDTO.mail}"/>
+                <p:inputText id="e-mail" value="#{mainController.employeeDTO.mail}" readonly="#{mainController.isReadonly}"/>
 
                 <p:outputLabel value="Телефон" for="phone"/>
-                <p:inputText id="phone" value="#{mainController.employeeDTO.phone}"/>
+                <p:inputText id="phone" value="#{mainController.employeeDTO.phone}" readonly="#{mainController.isReadonly}"/>
 
                 <p:outputLabel value="Skype" for="skype"/>
-                <p:inputText id="skype" value="#{mainController.employeeDTO.skype}"/>
+                <p:inputText id="skype" value="#{mainController.employeeDTO.skype}" readonly="#{mainController.isReadonly}"/>
             </p:panelGrid>
             <p/>
-            <p:outputPanel>
-                <p:commandButton action="#{mainController.saveEmployee}"
-                                 value="Добавить"
+            <p:outputPanel id="buttonsPanel">
+                <p:commandButton id="save"
+                                 action="#{mainController.saveEmployee}"
+                                 value="Сохранить"
                                  icon="fa fa-check"
                                  onclick="PF('dlgCreateUser').hide();"
-                                 update="workersList"/>
+                                 update="workersForm:workersList"
+                                 rendered="#{mainController.isReadonly eq false}" />
+                <ui:debug hotkey="x"></ui:debug>
             </p:outputPanel>
         </h:form>
     </p:dialog>
 </h:body>
+
 </html>

@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by Chingiskhan on 24.03.2017.
@@ -39,5 +40,12 @@ public class DepartmentDAOBean implements DepartmentDAO{
         query.setParameter("p_name", name);
         return query.getSingleResult();
     }
-    
+
+    @Override
+    public List<Department> getAll() {
+        return entityManager
+                .createNamedQuery("Department.FindAll", Department.class)
+                .getResultList();
+    }
+
 }

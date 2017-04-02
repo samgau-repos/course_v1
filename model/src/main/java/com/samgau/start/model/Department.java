@@ -7,8 +7,11 @@ import java.io.Serializable;
  * Created by Tolegen Izbassar on 17.03.2017.
  */
 @Entity
-@NamedQuery(name = "Department.FindByName", query = "" +
-		"SELECT dep from Department dep where dep.name = :p_name")
+@NamedQueries({
+        @NamedQuery(name = "Department.FindByName", query = "" +
+                "SELECT dep from Department dep where dep.name = :p_name"),
+        @NamedQuery(name = "Department.FindAll", query = "SELECT dep from Department dep"),
+})
 @Table(name = "D_DEPARTMENT")
 public class Department implements Serializable, Comparable<Department> {
 

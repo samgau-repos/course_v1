@@ -63,4 +63,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         return result;
     }
 
+    public void removeEmployee(EmployeeDTO employee) {
+        employeeDAO.removeEmployee(TransferUtil.getAsEmployee(employee));
+    }
+
 }
