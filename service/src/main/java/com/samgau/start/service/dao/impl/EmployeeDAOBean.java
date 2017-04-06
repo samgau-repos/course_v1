@@ -30,6 +30,7 @@ public class EmployeeDAOBean implements EmployeeDAO {
 
     @Override
     public Long create(Employee employee) {
+        employee.setIsRemoved(0);
         entityManager.persist(employee);
         return employee.getId();
     }

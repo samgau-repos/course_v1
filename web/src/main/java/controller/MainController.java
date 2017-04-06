@@ -1,6 +1,5 @@
 package controller;
 
-import com.samgau.start.model.Employee;
 import com.samgau.start.model.dto.EmployeeDTO;
 import com.samgau.start.service.api.EmployeeService;
 
@@ -110,6 +109,17 @@ public class MainController {
     public void removeEmployee(EmployeeDTO employee) {
         employeeService.removeEmployee(employee);
         workersDTO = null;
+    }
+
+    public List<EmployeeDTO> completeName(String query) {
+        List<EmployeeDTO> workers = getWorkersDTO();
+        List<EmployeeDTO> results = new ArrayList<>();
+        for (int i = 0; i < workers.size(); i++) {
+            if (workers.get(i).getName().contains(query)) {
+                results.add(workers.get(i));
+            }
+        }
+        return results;
     }
 
 }
